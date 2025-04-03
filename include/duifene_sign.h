@@ -6,7 +6,7 @@
 
 namespace duifene_sign {
 
-struct Course {
+struct CourseInfo {
     std::string course_id;
     std::string course_name;
     std::string class_id;
@@ -25,8 +25,6 @@ struct SignInfo {
     std::string hf_room_longitude;
     std::string hf_room_latitude;
     StudentAmount student_amount;
-
-    void print();
 };
 
 class Session {
@@ -37,10 +35,10 @@ public:
     ~Session();
 
     void login(const std::string& user_link);
-    void print_course_list();
     void sign(const SignInfo& sign_info);
     SignInfo get_sign_info(const int idx);
-
+    CourseInfo get_course_info(const int idx);
+    int get_course_count() const;
 };
 
 }  // namespace duifene_sign

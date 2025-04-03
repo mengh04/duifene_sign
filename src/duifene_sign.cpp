@@ -16,8 +16,8 @@ class Session::Impl {
 public:
     const std::string host = "https://www.duifene.com";
     cpr::Session session{};
-    std::vector<Course> course_list{};
     std::string stu_id;
+    std::vector<CourseInfo> course_list{};
     // SignInfo sign_info{};
 
     std::string extract_code(const std::string& user_link);
@@ -36,12 +36,6 @@ public:
 
 Session::Session() : impl(std::make_unique<Impl>()) {}
 Session::~Session() = default;
-
-void Session::print_course_list() {
-    for (int i = 0; i < impl->course_list.size(); i++) {
-        std::cout << i << " " << impl->course_list[i].course_name << std::endl;
-    }
-}
 
 void Session::login(const std::string& user_link) {
     const std::string code = impl->extract_code(user_link);
@@ -202,6 +196,18 @@ SignInfo Session::get_sign_info(const int idx) {
     return sign_info;
 }
 
+CourseInfo Session::get_course_info(const int idx) {
+    if (idx < 0 || idx >= impl->course_list.size()) {
+        std::cerr << "Index out of range" << std::endl;
+        return CourseInfo{};
+    }
+    return impl->course_list.at(idx);
+}
+
+int Session::get_course_count() const {
+    return static_cast<int>(impl->course_list.size());
+}
+
 bool Session::Impl::is_login() {
     cpr::Header headers = {
         {"Referer",
@@ -329,22 +335,6 @@ void Session::sign(const SignInfo& sign_info) {
         impl->sign_location(sign_info.hf_room_longitude,
                             sign_info.hf_room_latitude);
     }
-}
-
-void SignInfo::print() {
-    std::cout << "签到信息:" << std::endl;
-    std::cout << "剩余时间: " << hf_seconds << std::endl;
-    std::cout << "hf_checktype: " << hf_checktype << std::endl;
-    std::cout << "hf_check_in_id: " << hf_check_in_id << std::endl;
-    std::cout << "hf_class_id: " << hf_class_id << std::endl;
-    std::cout << "hf_check_code_key: " << hf_check_code_key << std::endl;
-    std::cout << "hf_room_longitude: " << hf_room_longitude << std::endl;
-    std::cout << "hf_room_latitude: " << hf_room_latitude << std::endl;
-    std::cout << "学生总人数: " << student_amount.total_amount
-              << ", 已签到人数: " << student_amount.signed_amount
-              << ", 未签到人数: "
-              << student_amount.total_amount - student_amount.signed_amount
-              << std::endl;
 }
 
 }  // namespace duifene_sign

@@ -7,7 +7,12 @@ int main() {
     printf("请输入登录链接: ");
     scanf("%s", user_link);
     session_login(session, user_link);
-    print_course_list(session);
+    
+    for (int i = 0; i < get_course_count(session); ++i) {
+        CourseInfo_C course_info = get_course_info(session, i);
+        printf("%d: %s\n", i, course_info.course_name);
+    }
+
     int idx;
  
     while (scanf("%d", &idx) == 1) {
@@ -15,7 +20,7 @@ int main() {
         if (sign_info.hf_checktype[0] != '\0') {
             do_sign(session, sign_info);
         }
-        print_sign_info(sign_info);
     }
+
     destroy_session(session);
 }

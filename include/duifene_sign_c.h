@@ -6,10 +6,10 @@ extern "C" {
 
 // 定义课程结构体 (C 语言版本)
 typedef struct {
-    const char* course_id;
-    const char* course_name;
-    const char* class_id;
-} Course_C;
+    char course_id[16];
+    char course_name[128];
+    char class_id[16];
+} CourseInfo_C;
 
 // 定义学生签到数量结构体 (C 语言版本)
 typedef struct {
@@ -41,25 +41,17 @@ void destroy_session(SessionHandle handle);
 // 登录
 void session_login(SessionHandle handle, const char* user_link);
 
-// 打印课程列表
-void print_course_list(SessionHandle handle);
-
 // 获取课程数量
 int get_course_count(SessionHandle handle);
 
 // 获取指定课程信息
-Course_C get_course_info(SessionHandle handle, int index);
+CourseInfo_C get_course_info(SessionHandle handle, int index);
 
 // 获取签到信息
 SignInfo_C get_sign_info(SessionHandle handle, int index);
 
 // 执行签到
 void do_sign(SessionHandle handle, SignInfo_C sign_info);
-
-void print_sign_info(SignInfo_C sign_info);
-
-// 释放字符串内存 (用于返回的const char*)
-void free_c_string(const char* str);
 
 #ifdef __cplusplus
 }
