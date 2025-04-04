@@ -46,7 +46,7 @@ void Session::login(const std::string& user_link) {
         "AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 "
         "MicroMessenger/8.0.40(0x1800282a) NetType/WIFI Language/zh_CN"));
     impl->session.SetUrl(url);
-    const cpr::Response response = impl->session.Get();
+    const cpr::Response response = impl->session.Get(); 
     if (response.status_code == 200) {
         std::cout << "登录成功" << std::endl;
         impl->get_course_list();

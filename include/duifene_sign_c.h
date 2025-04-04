@@ -6,9 +6,9 @@ extern "C" {
 
 // 定义课程结构体 (C 语言版本)
 typedef struct {
-    char course_id[16];
-    char course_name[128];
-    char class_id[16];
+    char* course_id;
+    char* course_name;
+    char* class_id;
 } CourseInfo_C;
 
 // 定义学生签到数量结构体 (C 语言版本)
@@ -19,13 +19,13 @@ typedef struct {
 
 // 定义签到信息结构体 (C 语言版本)
 typedef struct {
-    char hf_seconds[8];
-    char hf_checktype[4];
-    char hf_check_in_id[8];
-    char hf_class_id[8];
-    char hf_check_code_key[8];
-    char hf_room_longitude[128];
-    char hf_room_latitude[128];
+    char* hf_seconds;
+    char* hf_checktype;
+    char* hf_check_in_id;
+    char* hf_class_id;
+    char* hf_check_code_key;
+    char* hf_room_longitude;
+    char* hf_room_latitude;
     StudentAmount_C student_amount;
 } SignInfo_C;
 
@@ -52,6 +52,10 @@ SignInfo_C get_sign_info(SessionHandle handle, int index);
 
 // 执行签到
 void do_sign(SessionHandle handle, SignInfo_C sign_info);
+
+void free_sign_info(SignInfo_C sign_info);
+
+void free_course_info(CourseInfo_C course_info);
 
 #ifdef __cplusplus
 }
